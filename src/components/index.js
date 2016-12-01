@@ -1,2 +1,4 @@
 import NavBar from './navbar';
-export {NavBar};
+import Map from './map';
+import List from './list';
+export {NavBar, Map, List};

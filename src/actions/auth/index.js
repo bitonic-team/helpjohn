@@ -1,26 +1,21 @@
 import constants from '../../constants';
+import request from 'superagent';
 
 export function login({email, password}){
     return (dispatch) => {
         dispatch({type: constants.LOADING_LOGIN});
-
-
-
-        setTimeout(() => {
-            const body = {
-                token: '123abc',
-                user: {
-                    name: 'Dave',
-                    surname: 'Cingala',
-                    email: 'david.cingala@gmail.com'
-                }
-            };
-            localStorage.setItem('john', JSON.stringify(body));
-            return dispatch({type: constants.LOGGED, payload: body});
-            //return dispatch({type: constants.LOGIN_ERROR, message: 'Mauvais mot de passe'});
-        }, 2000);
-
-
+        return request
+            .post('http://10.8.110.225:8765/users/auth')
+            .set('Authorization', '')
+            .send({email, password})
+            .end((err, result) => {
+                if(err) return dispatch({type: constants.LOGIN_ERROR, message: result.body.err});
+                const user = result.body;
+                const token = user.token;
+                const body = {token, user};
+                localStorage.setItem('john', JSON.stringify(body));
+                return dispatch({type: constants.LOGGED, payload: body});
+            });
     };
 }
 

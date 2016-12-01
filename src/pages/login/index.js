@@ -15,8 +15,8 @@ class Login extends Component{
         this.login = this.login.bind(this);
         this.change = this.change.bind(this);
         this.state = {
-            email: '',
-            password: ''
+            email: 'cingala@intechinfo.fr',
+            password: 'raincy'
         }
     }
 
@@ -35,10 +35,11 @@ class Login extends Component{
     }
 
     change(type){
-        return (value) => this.setState({[type]: value});
+        return (e) => this.setState({[type]: e.target.value});
     }
 
     render(){
+        const {email, password} = this.state;
         const {user} = this.props;
         const {loginLoading, loginError} = user;
 
@@ -49,14 +50,20 @@ class Login extends Component{
         return (
             <div className="login-page">
                 <div className="login-box">
-
                     <p className="login-title">Connectez vous</p>
-
                     <p className="control">
-                        <input className="input" type="text" placeholder="Email"/>
+                        <input onChange={this.change('email')}
+                               value={email}
+                               className="input"
+                               type="text"
+                               placeholder="Email"/>
                     </p>
                     <p className="control">
-                        <input className="input" type="password" placeholder="Password"/>
+                        <input onChange={this.change('password')}
+                               value={password}
+                               className="input"
+                               type="password"
+                               placeholder="Password"/>
                     </p>
                     <p className="login-error">{loginError || '.'}</p>
                     <p className="control login-buttons">

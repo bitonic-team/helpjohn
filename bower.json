@@ -1,0 +1,20 @@
+{
+  "name": "worker",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "David Cingala <david.cingala@adotmob.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bulma": "^0.2.3"
+  }
+}

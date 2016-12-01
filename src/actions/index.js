@@ -1,2 +1,2 @@
-import * as test from './test';
-export default {test};
+import * as auth from './auth';
+export default {auth};

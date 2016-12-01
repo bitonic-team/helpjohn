@@ -24,17 +24,44 @@ body {
 .login-page{
   width: 100vw;
   height: 100vh;
+  padding-top: 100px;
   background-image: url('http://img11.hostingpics.net/pics/286001pattern3.png') !important;
 }
 
 .login-box{
-  width: 20vw;
+  width: 25vw;
   background-color: white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   margin: auto;
-  margin-top: 200px;
-  padding: 30px;
+  padding: 40px;
   border-radius: 2px;
+}
+
+.login-title{
+  text-align: center;
+  font-size: 1.6em !important;
+  margin-bottom: 30px;
+}
+
+.login-buttons{
+  margin-top: 20px;
+}
+
+.login-button{
+  font-size: 1.2em !important;
+  background-color: #51C08A !important;
+
+  &.is-link{
+    color: black !important;
+    background-color: transparent !important;
+  }
+}
+
+.login-error{
+  padding: 0;
+  color: #e74c3c;
+  text-align: center;
+  font-size: 1.2em;
 }
 
 input{
@@ -44,5 +71,4 @@ input{
 
 .button{
   font-family: 'Signika', sans-serif;
-  font-size: 1.2em !important;
 }

@@ -5,6 +5,10 @@ import {NavBar} from '../../components';
 
 class Home extends Component{
 
+    static contextTypes = {
+        router: PropTypes.object
+    };
+
     constructor(props){
         super(props);
     }
@@ -18,4 +22,6 @@ class Home extends Component{
     }
 }
 
-export default connect((state) => ({}), mapDispatchToProps)(Home);
+export default connect((state) => ({
+    user: state.user
+}), mapDispatchToProps)(Home);

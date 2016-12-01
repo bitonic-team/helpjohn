@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import {routeReducer} from 'react-router-redux';
-import segmentReducer from './segment';
+import userReducer from './user';
 
 const rootReducer = combineReducers({
     routing: routeReducer,
-    segment: segmentReducer
+    user: userReducer
 });
 
 export default rootReducer;

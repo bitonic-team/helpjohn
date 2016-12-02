@@ -17,11 +17,20 @@ export default class Map extends Component{
     }
 
     map(){
+        const {zones, onClickMarker} = this.props;
         return (
             <GoogleMap ref={(map) => this.current = map}
                        defaultZoom={5}
                        defaultCenter={{lat: 48.861984, lng: 13.154044}}
                        onClick={() => ({})}>
+
+                {zones.map((zone) => {
+                    return (
+                        <Marker onClick={() => onClickMarker(zone.id)}
+                                position={{lat: zone.lat, lng: zone.lon}}/>
+                    );
+                })}
+
 
             </GoogleMap>
         );

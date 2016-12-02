@@ -1,2 +1,3 @@
 import * as auth from './auth';
-export default {auth};
+import * as items from './items';
+export default {auth, items};

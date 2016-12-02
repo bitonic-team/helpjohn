@@ -30,7 +30,7 @@ class Navbar extends Component{
                 <div className="container">
                     <div className="nav-left">
                         <a className="nav-item is-brand" href="#">
-                            <img src="http://img11.hostingpics.net/pics/230362Sanstitre.png" alt="Bulma logo"/>
+                            <img src="https://helpjohn.xyz/images/logo.png" alt="Bulma logo"/>
                         </a>
                         {user.profile && <a className="nav-item">{user.profile.email}</a>}
                     </div>

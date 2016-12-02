@@ -65,7 +65,7 @@ class Login extends Component{
                                type="password"
                                placeholder="Password"/>
                     </p>
-                    <p className="login-error">{loginError || '.'}</p>
+                    <p style={{color: loginError ? '#e74c3c' : 'white'}} className="login-error">{loginError || '.'}</p>
                     <p className="control login-buttons">
                         <button onClick={this.login}
                                 className={btnClass}>Connexion</button>

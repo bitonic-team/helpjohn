@@ -79,3 +79,15 @@ export function getZones(body){
             });
     };
 }
+
+export function donate(body){
+    return (dispatch) => {
+        return request
+            .post('https://api.helpjohn.xyz/donations')
+            .send(body)
+            .end((err, result) => {
+                const list = result.body;
+                return dispatch({type: constants.ITEMS_FETCHED, list});
+            });
+    };
+}

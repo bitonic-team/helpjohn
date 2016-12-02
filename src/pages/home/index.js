@@ -14,6 +14,7 @@ class Home extends Component{
         this.addItem = this.addItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
         this.zoneChange = this.zoneChange.bind(this);
+        this.donate = this.donate.bind(this);
         this.state = {
             zone: 1
         }
@@ -33,6 +34,20 @@ class Home extends Component{
     deleteItem(id){
         const {actions} = this.props;
         return actions.items.del(id);
+    }
+
+    donate(body){
+        const {actions} = this.props;
+
+        console.log('donate :', body);
+
+        const payload = {
+            amount: body.amount,
+            item: 1,
+            name: body.name
+        };
+
+        return actions.items.donate(payload);
     }
 
     zoneChange(zone){
@@ -56,10 +71,12 @@ class Home extends Component{
         return (
             <div>
                 <NavBar/>
-                <div className="columns is-gapless">
-                    <div className="column">
+                <div className="columns is-gapless"
+                     style={{height: '100vh'}}>
+                    <div className="column" style={{overflowY: 'auto'}}>
                         <List list={list}
                               currentZone={currentZone}
+                              donate={this.donate}
                               deleteItem={this.deleteItem}
                               addItem={this.addItem}/>
                     </div>

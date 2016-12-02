@@ -10,9 +10,10 @@ const equivalences = {
     material: 'is-warning'
 };
 
-const SortableItem = SortableElement(({data, index, del}) => {
+const SortableItem = SortableElement(({data, index, del, donate}) => {
 
     const storage = JSON.parse(localStorage.getItem('john'));
+    const percent = (data.amount % data.price) / data.price * 100;
 
     return (
         <div className="item">
@@ -27,6 +28,11 @@ const SortableItem = SortableElement(({data, index, del}) => {
                            onClick={del(data.id)}
                            style={{marginLeft: '5px'}}>Delete</a>
                     </p>}
+                    {!storage && <p className="is-pulled-right">
+                        <a className="button item-priority is-outlined"
+                           onClick={donate(data.id)}
+                           style={{marginLeft: '5px'}}>Participate</a>
+                    </p>}
                     <p className="item-priority is-pulled-right">
                         <span className="tag item-tag">Priorité {index + 1}</span>
                     </p>
@@ -34,7 +40,7 @@ const SortableItem = SortableElement(({data, index, del}) => {
             </div>
             <div className="columns">
                 <div className="column">
-                    <Line percent={10}
+                    <Line percent={percent}
                           strokeWidth={1.5}
                           trailWidth={1.5}
                           strokeColor={'#3676D9'} />
@@ -48,10 +54,11 @@ const SortableItem = SortableElement(({data, index, del}) => {
     );
 });
 
-const SortableList = SortableContainer(({items, del}) => {
+const SortableList = SortableContainer(({items, del, donate}) => {
     return <ul>{items.map((value, index) => <SortableItem key={`item-${index}`} 
                                                           index={index}
                                                           del={del}
+                                                          donate={donate}
                                                           data={value} />)}</ul>
 });
 
@@ -66,15 +73,19 @@ class List extends Component{
         this.change = this.change.bind(this);
         this.add = this.add.bind(this);
         this.del = this.del.bind(this);
+        this.donate = this.donate.bind(this);
 
         this.state = {
             name: 'Produit vaiselle',
+            pseudo: '',
+            amount: '',
             price: 20,
             tag: 'food',
             description: '',
             daily: false,
             isAdd: false,
-            items: props.list
+            items: props.list,
+            step: 1
         }
     }
 
@@ -102,6 +113,12 @@ class List extends Component{
     del(id){
         const {deleteItem} = this.props;
         return () => deleteItem(id);
+    }
+
+    donate(id){
+        const {donate} = this.props;
+        const {pseudo, amount} = this.props;
+        return () => donate({id, name: pseudo, amount: parseFloat(amount)})
     }
 
     onSortEnd({oldIndex, newIndex}){
@@ -191,15 +208,17 @@ class List extends Component{
             <div>
                 <div className="columns">
                     <div className="column">
-                        <p style={{fontSize: '1.3em', textAlign: 'center', marginTop: 10}}>Zone: {currentZone && currentZone.name}</p>
+                        <p style={{fontSize: '1.3em', textAlign: 'center', marginTop: 10}}> Refugees intervention zone: {currentZone && currentZone.name || 'Inconnue'}</p>
                     </div>
                 </div>
                 <div className="columns is-paddingless">
                     <div className="column list">
                         {items.length > 0 && <SortableList items={items}
-                                      del={this.del}
-                                      distance={5}
-                                      onSortEnd={this.onSortEnd} />}
+                                                           del={this.del}
+                                                           donate={this.donate}
+                                                           shouldCancelStart={() => !user.logged}
+                                                           distance={5}
+                                                           onSortEnd={this.onSortEnd} />}
                     </div>
                 </div>
                 {!items.length && <p style={{fontSize: '1.3em', textAlign: 'center'}}>No items for this zone, please select an other marker</p>}
@@ -215,13 +234,40 @@ class List extends Component{
 
     render(){
         const {user} = this.props;
-        const {isAdd} = this.state;
+        const {isAdd, step, pseudo, amount} = this.state;
 
         return (
             <div>
                 {!user.logged && <div className="columns is-paddingless">
                     <div className="column ia">
+                        {step === 1 && <div>
+                            <p style={{fontSize: '1.4em', textAlign: 'center'}}>
+                                Hello I'm John Doe, give me your name to know you better:
+                            </p>
+                            <input className="input"
+                                   style={{marginTop: '20px'}}
+                                   onChange={this.change('pseudo')}
+                                   value={pseudo}
+                                   type="text"
+                                   placeholder="Donator name"/>
 
+                            <button onClick={() => this.setState({step: 2})}
+                                    style={{marginTop: '10px'}}
+                                    className="button is-info is-outlined is-pulled-right">OK Let's go</button>
+
+                        </div>}
+
+                        {step === 2 && <div>
+                            <p style={{fontSize: '1.4em', textAlign: 'center'}}>
+                                Choose your amount and click "Participate" on one card:
+                            </p>
+                            <input className="input"
+                                   style={{marginTop: '20px'}}
+                                   onChange={this.change('amount')}
+                                   value={amount}
+                                   type="text"
+                                   placeholder="amount"/>
+                        </div>}
                     </div>
                 </div>}
                 {isAdd ? this.adder() : this.list()}

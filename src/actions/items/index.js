@@ -3,6 +3,8 @@ import request from 'superagent';
 
 export function add(body){
     const storage = JSON.parse(localStorage.getItem('john'));
+    const zone = localStorage.getItem('zone');
+
     return (dispatch) => {
         return request
             .post('https://api.helpjohn.xyz/items')
@@ -10,7 +12,10 @@ export function add(body){
             .send(body)
             .end((err, result) => {
                 if(err) console.log('err', err);
-                const list = result.body;
+                const list = storage && storage.user
+                    ? result.body.filter((x) => x.zone === storage.user.zone)
+                    : result.body.filter((x) => x.zone == zone);
+
                 return dispatch({type: constants.ITEMS_FETCHED, list});
             });
     };
@@ -28,7 +33,7 @@ export function list(zone){
 
                 const list = storage && storage.user
                     ? result.body.filter((x) => x.zone === storage.user.zone)
-                    : result.body.filter((x) => x.zone === zone);
+                    : result.body.filter((x) => x.zone == zone);
 
                 return dispatch({type: constants.ITEMS_FETCHED, list});
             });
@@ -37,6 +42,8 @@ export function list(zone){
 
 export function update(arr){
     const storage = JSON.parse(localStorage.getItem('john'));
+    const zone = localStorage.getItem('zone');
+
     return (dispatch) => {
         return request
             .put('https://api.helpjohn.xyz/items')
@@ -45,7 +52,10 @@ export function update(arr){
             .send(arr)
             .end((err, result) => {
                 if(err) console.log('err', err);
-                const list = result.body;
+                const list = storage && storage.user
+                    ? result.body.filter((x) => x.zone === storage.user.zone)
+                    : result.body.filter((x) => x.zone == zone);
+
                 return dispatch({type: constants.ITEMS_FETCHED, list});
             });
     };
@@ -53,6 +63,7 @@ export function update(arr){
 
 export function del(id){
     const storage = JSON.parse(localStorage.getItem('john'));
+    const zone = localStorage.getItem('zone');
 
     return (dispatch) => {
         return request
@@ -61,7 +72,10 @@ export function del(id){
             .set('Authorization', storage.token)
             .end((err, result) => {
                 if(err) console.log('err', err);
-                const list = result.body;
+                const list = storage && storage.user
+                    ? result.body.filter((x) => x.zone === storage.user.zone)
+                    : result.body.filter((x) => x.zone == zone);
+
                 return dispatch({type: constants.ITEMS_FETCHED, list});
             });
     };
@@ -81,12 +95,20 @@ export function getZones(body){
 }
 
 export function donate(body){
+    const zone = localStorage.getItem('zone');
+    const storage = null;
+
+    console.log('zone :', zone);
+    
     return (dispatch) => {
         return request
             .post('https://api.helpjohn.xyz/donations')
             .send(body)
             .end((err, result) => {
-                const list = result.body;
+                const list = storage && storage.user
+                    ? result.body.filter((x) => x.zone === storage.user.zone)
+                    : result.body.filter((x) => {return x.zone == zone});
+
                 return dispatch({type: constants.ITEMS_FETCHED, list});
             });
     };

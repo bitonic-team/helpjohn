@@ -49,6 +49,7 @@ class Home extends Component{
     }
 
     zoneChange(zone){
+        localStorage.setItem('zone', zone);
         const {actions} = this.props;
         this.setState({zone});
         return actions.items.list(zone);

@@ -10,7 +10,7 @@ const equivalences = {
     material: 'is-warning'
 };
 
-const SortableItem = SortableElement(({data, index, del, donate}) => {
+const SortableItem = SortableElement(({data, index, del, donate, amount}) => {
 
     const storage = JSON.parse(localStorage.getItem('john'));
     const percent = (data.amount) / data.price * 100;
@@ -28,13 +28,14 @@ const SortableItem = SortableElement(({data, index, del, donate}) => {
                            onClick={del(data.id)}
                            style={{marginLeft: '5px'}}>Delete</a>
                     </p>}
-                    {!storage && <p className="is-pulled-right">
+                    {(amount && !storage) && <p className="is-pulled-right">
                         <a className="button item-priority is-outlined"
                            onClick={donate(data.id)}
                            style={{marginLeft: '5px'}}>Participate</a>
                     </p>}
                     <p className="item-priority is-pulled-right">
-                        <span className="tag item-tag">Priorité {index + 1}</span>
+                        <span style={{fontSize: '0.9em'}}
+                              className="tag item-tag">Priority{index + 1}</span>
                     </p>
                 </div>
             </div>
@@ -47,7 +48,7 @@ const SortableItem = SortableElement(({data, index, del, donate}) => {
                     {percent >= 100 && <p>Yeeah, we explode the donations for today ({percent}%)</p>}
                 </div>
                 <div className="column is-narrow">
-                    <p className="item-price">{data.price} € {data.daily ? 'par jour' : ''}</p>
+                    <p className="item-price">{data.price} € {data.daily ? 'per day' : ''}</p>
                 </div>
             </div>
 
@@ -55,10 +56,11 @@ const SortableItem = SortableElement(({data, index, del, donate}) => {
     );
 });
 
-const SortableList = SortableContainer(({items, del, donate}) => {
+const SortableList = SortableContainer(({items, del, donate, amount}) => {
     return <ul>{items.map((value, index) => <SortableItem key={`item-${index}`} 
                                                           index={index}
                                                           del={del}
+                                                          amount={amount}
                                                           donate={donate}
                                                           data={value} />)}</ul>
 });
@@ -77,10 +79,10 @@ class List extends Component{
         this.donate = this.donate.bind(this);
 
         this.state = {
-            name: 'Produit vaiselle',
+            name: '',
             pseudo: '',
             amount: '',
-            price: 20,
+            price: '',
             tag: 'food',
             description: '',
             daily: false,
@@ -120,7 +122,7 @@ class List extends Component{
         const {donate} = this.props;
         const {pseudo, amount} = this.state;
         return () => {
-            this.setState({step: 3});
+            this.setState({step: 3, amount: ''});
             return donate({id, name: pseudo, amount: parseFloat(amount)})
         }
     }
@@ -193,9 +195,9 @@ class List extends Component{
 
                         <p className="control is-pulled-right">
                             <button onClick={() => this.setState({isAdd: false})}
-                                    className="button is-info is-outlined list-button">Annuler</button>
+                                    className="button is-info is-outlined list-button">Cancel</button>
                             <button onClick={this.add}
-                                    className="button is-success is-outlined list-button">Ajouter</button>
+                                    className="button is-success is-outlined list-button">Add</button>
                         </p>
 
                     </div>
@@ -206,7 +208,7 @@ class List extends Component{
 
     list(){
         const {user, currentZone} = this.props;
-        const {items} = this.state;
+        const {items, amount} = this.state;
 
         return (
             <div>
@@ -218,6 +220,7 @@ class List extends Component{
                 <div className="columns is-paddingless">
                     <div className="column list">
                         {items.length > 0 && <SortableList items={items}
+                                                           amount={amount}
                                                            del={this.del}
                                                            donate={this.donate}
                                                            shouldCancelStart={() => !user.logged}
@@ -228,7 +231,7 @@ class List extends Component{
                 {!items.length && <p style={{fontSize: '1.3em', textAlign: 'center'}}>No items for this zone, please select an other marker</p>}
                 <p className="control is-pulled-right">
                     {user.logged && <button onClick={() => this.setState({isAdd: true})}
-                            className="button is-info is-outlined list-button">Ajouter un item</button>}
+                            className="button is-info is-outlined list-button">Add an item</button>}
                 </p>
             </div>
 

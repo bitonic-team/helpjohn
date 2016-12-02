@@ -15,8 +15,8 @@ class Login extends Component{
         this.login = this.login.bind(this);
         this.change = this.change.bind(this);
         this.state = {
-            email: 'cingala@intechinfo.fr',
-            password: 'raincy'
+            email: '',
+            password: ''
         }
     }
 
@@ -50,7 +50,7 @@ class Login extends Component{
         return (
             <div className="login-page">
                 <div className="login-box">
-                    <p className="login-title">Connectez vous</p>
+                    <p className="login-title">Connect to you manager account</p>
                     <p className="control">
                         <input onChange={this.change('email')}
                                value={email}
@@ -68,9 +68,9 @@ class Login extends Component{
                     <p style={{color: loginError ? '#e74c3c' : 'white'}} className="login-error">{loginError || '.'}</p>
                     <p className="control login-buttons">
                         <button onClick={this.login}
-                                className={btnClass}>Connexion</button>
+                                className={btnClass}>Connection</button>
                         {!loginLoading &&<button className="button login-button is-link">
-                            <Link to="home">Annuler</Link>
+                            <Link to="home">Cancel</Link>
                         </button>}
                     </p>
                 </div>

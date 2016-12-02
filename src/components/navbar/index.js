@@ -40,12 +40,12 @@ class Navbar extends Component{
                         <span/>
                     </span>
                     <div className="nav-right nav-menu">
-                        <a className="nav-item">Blog</a>
+                        <a className="nav-item">Download Electon App</a>
                         <span className="nav-item">
                             <a className="button is-outlined john-navbar-button"
                                onClick={this.onClick}>
                                 <span className="john-navbar-button-text">
-                                    {user.logged ? 'Deconnexion' : 'Je suis responsable'}
+                                    {user.logged ? 'Log out' : 'I\'m a manager'}
                                 </span>
                             </a>
                         </span>

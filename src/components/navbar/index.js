@@ -40,7 +40,19 @@ class Navbar extends Component{
                         <span/>
                     </span>
                     <div className="nav-right nav-menu">
-                        <a className="nav-item">Download Electon App</a>
+                        <a className="nav-item" style={{fontSize: '1em'}}>
+                            Download
+                            <span className="icon">
+                                <a href="https://helpjohn.xyz/download/helpjohn.app">
+                                    <i style={{color: 'white'}} className="fa fa-apple"></i>
+                                </a>
+                            </span>
+                             <span className="icon">
+                               <a href="https://helpjohn.xyz/download/helpjohn.exe">
+                                    <i style={{color: 'white'}} className="fa fa-windows"></i>
+                               </a>
+                            </span>
+                        </a>
                         <span className="nav-item">
                             <a className="button is-outlined john-navbar-button"
                                onClick={this.onClick}>

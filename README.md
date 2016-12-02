@@ -34,8 +34,13 @@ Vous pouvez ensuite exprimer les différents besoins de vos installations grâce
 
 ## Installations
 
+`$ npm install`
 
-[URL] Installer l'API [/URL]
+`$ bower install`
+
+`$ npm run build`
+
+Installer l'API https://github.com/bitonic-team/helpjohn-api
 
 ## Client technologies
 ReactJs
@@ -61,8 +66,9 @@ BDD : Mysql 5.7
 
 Nous avons suivi la méthodologie OWASP, une référence dans le domaine de la sécurité des applications web.
 
-Voir notre testing checklist.
+Voir notre testing checklist http://helpjohn.xyz/download/Oswap_testing_checklist.pdf
 
+Configuration du serveur http://helpjohn.xyz/download/nginx_conf
 # API
 
-Voir l'API REST
+Voir l'API REST : https://github.com/bitonic-team/helpjohn-api

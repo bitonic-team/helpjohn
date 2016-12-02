@@ -13,7 +13,7 @@ const equivalences = {
 const SortableItem = SortableElement(({data, index, del, donate}) => {
 
     const storage = JSON.parse(localStorage.getItem('john'));
-    const percent = (data.amount % data.price) / data.price * 100;
+    const percent = (data.amount) / data.price * 100;
 
     return (
         <div className="item">
@@ -40,10 +40,11 @@ const SortableItem = SortableElement(({data, index, del, donate}) => {
             </div>
             <div className="columns">
                 <div className="column">
-                    <Line percent={percent}
+                    <Line percent={percent > 100 ? 100 : percent}
                           strokeWidth={1.5}
                           trailWidth={1.5}
                           strokeColor={'#3676D9'} />
+                    {percent >= 100 && <p>Yeeah, we explode the donations for today ({percent}%)</p>}
                 </div>
                 <div className="column is-narrow">
                     <p className="item-price">{data.price} € {data.daily ? 'par jour' : ''}</p>
@@ -117,8 +118,11 @@ class List extends Component{
 
     donate(id){
         const {donate} = this.props;
-        const {pseudo, amount} = this.props;
-        return () => donate({id, name: pseudo, amount: parseFloat(amount)})
+        const {pseudo, amount} = this.state;
+        return () => {
+            this.setState({step: 3});
+            return donate({id, name: pseudo, amount: parseFloat(amount)})
+        }
     }
 
     onSortEnd({oldIndex, newIndex}){
@@ -233,7 +237,7 @@ class List extends Component{
     }
 
     render(){
-        const {user} = this.props;
+        const {user, currentZone} = this.props;
         const {isAdd, step, pseudo, amount} = this.state;
 
         return (
@@ -267,6 +271,15 @@ class List extends Component{
                                    value={amount}
                                    type="text"
                                    placeholder="amount"/>
+                        </div>}
+
+                        {step === 3 && <div>
+                            <p style={{fontSize: '1.4em', textAlign: 'center'}}>
+                                Thank you very much from the {currentZone.pop} refugees from {currentZone.name}
+                                <button onClick={() => this.setState({step: 1})}
+                                        style={{marginTop: '10px'}}
+                                        className="button is-info is-outlined is-pulled-right">Participate again</button>
+                            </p>
                         </div>}
                     </div>
                 </div>}

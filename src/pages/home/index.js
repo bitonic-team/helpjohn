@@ -39,11 +39,9 @@ class Home extends Component{
     donate(body){
         const {actions} = this.props;
 
-        console.log('donate :', body);
-
         const payload = {
             amount: body.amount,
-            item: 1,
+            item: body.id,
             name: body.name
         };
 

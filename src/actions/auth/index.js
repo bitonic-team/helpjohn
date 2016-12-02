@@ -5,7 +5,7 @@ export function login({email, password}){
     return (dispatch) => {
         dispatch({type: constants.LOADING_LOGIN});
         return request
-            .post('http://10.8.110.225:8765/users/auth')
+            .post('https://api.helpjohn.xyz/users/auth')
             .set('Authorization', '')
             .send({email, password})
             .end((err, result) => {

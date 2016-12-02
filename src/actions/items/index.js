@@ -5,7 +5,7 @@ export function add(body){
     const storage = JSON.parse(localStorage.getItem('john'));
     return (dispatch) => {
         return request
-            .post('http://10.8.110.225:8765/items')
+            .post('https://api.helpjohn.xyz/items')
             .set('Authorization', storage.token)
             .send(body)
             .end((err, result) => {
@@ -22,7 +22,7 @@ export function list(zone){
 
     return (dispatch) => {
         return request
-            .get('http://10.8.110.225:8765/items')
+            .get('https://api.helpjohn.xyz/items')
             .end((err, result) => {
                 if(err) console.log('err', err);
 
@@ -39,7 +39,7 @@ export function update(arr){
     const storage = JSON.parse(localStorage.getItem('john'));
     return (dispatch) => {
         return request
-            .put('http://10.8.110.225:8765/items')
+            .put('https://api.helpjohn.xyz/items')
             .query({zone: storage.user && storage.user.zone})
             .set('Authorization', storage.token)
             .send(arr)
@@ -56,7 +56,7 @@ export function del(id){
 
     return (dispatch) => {
         return request
-            .del('http://10.8.110.225:8765/items/' + id)
+            .del('https://api.helpjohn.xyz/items/' + id)
             .query({zone: storage.user && storage.user.zone})
             .set('Authorization', storage.token)
             .end((err, result) => {
@@ -70,7 +70,7 @@ export function del(id){
 export function getZones(body){
     return (dispatch) => {
         return request
-            .get('http://10.8.110.225:8765/zones')
+            .get('https://api.helpjohn.xyz/zones')
             .send(body)
             .end((err, result) => {
                 if(err) console.log('err', err);

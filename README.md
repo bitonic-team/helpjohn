@@ -3,9 +3,9 @@ Help John
 
 ## Qu'est ce que c'est ?
 
-Des dizaines de millions de personnes fuient actuellement les conflits ou les persécutions dans le monde entier, se retrouvant ainsi loins de leur foyer. 
+Des dizaines de millions de personnes fuient actuellement les conflits ou les persécutions dans le monde entier, se retrouvant ainsi loin de leur foyer. 
 
-Les camps de réfugiés dans lesquels ils se retrouvent manquent cruellement de resources.
+Les camps de réfugiés dans lesquels ils se retrouvent manquent cruellement de ressources.
 
 HelpJohn facilite la répartition des dons entre les différents camps en fonction de leurs besoins.
 
@@ -16,9 +16,9 @@ HelpJohn est disponible sur le web à l'adresse https://helpjohn.xyz et sous for
 [<img src="http://i.imgur.com/cjlxrf3.png" />](http://i.imgur.com/cjlxrf3.png)
 
 ## Comment ca marche ?
-### En tant que donnateur
+### En tant que donateur
 Sur la page d'accueil, l'IA (John Doe) vous propose de faire un don au camp de réfugiés de votre choix.
-Vous pouvez naviguer et voir les différents besoins des camps sur la carte intéractive.
+Vous pouvez naviguer et voir les différents besoins des camps sur la carte interactive.
 
 Dans une version plus avancée l'IA vous aidera à choisir à qui faire un don en prenant en compte les besoins les plus urgents.
 
@@ -32,7 +32,7 @@ Vous pouvez ensuite exprimer les différents besoins de vos installations grâce
 | david@calais.com | calais |
 | antoine@vienne.com | vienne |
 
-## Installations
+## Build web app
 
 `$ npm install`
 
@@ -41,6 +41,18 @@ Vous pouvez ensuite exprimer les différents besoins de vos installations grâce
 `$ npm run build`
 
 Installer l'API https://github.com/bitonic-team/helpjohn-api
+
+## Build Desktop app
+
+`$ npm install`
+
+`$ bower install`
+
+`$ electron-packager . helpjohn --all --version 1.4.10`
+
+Win64 : http://helpjohn.xyz/download/helpjohn.exe
+
+Linux64 : http://helpjohn.xyz/download/helpjohn
 
 ## Client technologies
 ReactJs
